@@ -1,0 +1,657 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>단지온 · 상계주공10단지</title>
+<!-- [2026-09-01] 이 파일은 아티팩트로 작성돼 charset 선언이 없었고, 로컬/웹서버에서 단독으로 열면
+     한글이 깨졌다. doctype/html/head/body 는 아티팩트 게시 시 자동으로 감싸지므로 넣지 않고,
+     인코딩 선언과 제목만 파일 맨 앞에 둔다(둘 다 아티팩트에서도 그대로 유효). -->
+<style>
+  /* ===== 단지온 · 상계주공10단지 입주민 대시보드 (데모) ===== */
+  :root{
+    --ground:#EAEEEC; --surface:#FFFFFF; --surface-2:#F4F7F5; --surface-3:#EDF2F0;
+    --ink:#14201C; --ink-2:#42544D; --ink-3:#6C7D76;
+    --line:#DBE3DF; --line-2:#CAD5D0;
+    --accent:#1E6E63; --accent-ink:#0E4A41; --accent-soft:#DAEAE5; --accent-2:#C9A24B;
+    --good:#2F855A; --good-soft:#DFF0E6;
+    --warn:#B3701A; --warn-soft:#F6E9D3;
+    --crit:#C0392B; --crit-soft:#F6DED9;
+    --info:#2B6CB0; --info-soft:#DCE8F5;
+    --shadow:0 1px 2px rgba(20,32,28,.05),0 8px 24px rgba(20,32,28,.06);
+    --shadow-lg:0 12px 40px rgba(20,32,28,.14);
+    --r:14px; --r-sm:9px;
+    --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,-apple-system,sans-serif;
+    --maxw:1180px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#0D1513; --surface:#141F1C; --surface-2:#1A2723; --surface-3:#20302B;
+      --ink:#E9F0ED; --ink-2:#A6B7B1; --ink-3:#7C8E88;
+      --line:#293833; --line-2:#33453F;
+      --accent:#54B7A8; --accent-ink:#9BDDD2; --accent-soft:#17302B; --accent-2:#D6B461;
+      --good:#5BB98A; --good-soft:#162A20;
+      --warn:#D69A46; --warn-soft:#2E2517;
+      --crit:#E0715F; --crit-soft:#301B17;
+      --info:#6AA6E0; --info-soft:#152536;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+      --shadow-lg:0 14px 44px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#EAEEEC; --surface:#FFFFFF; --surface-2:#F4F7F5; --surface-3:#EDF2F0;
+    --ink:#14201C; --ink-2:#42544D; --ink-3:#6C7D76;
+    --line:#DBE3DF; --line-2:#CAD5D0;
+    --accent:#1E6E63; --accent-ink:#0E4A41; --accent-soft:#DAEAE5; --accent-2:#C9A24B;
+    --good:#2F855A; --good-soft:#DFF0E6; --warn:#B3701A; --warn-soft:#F6E9D3;
+    --crit:#C0392B; --crit-soft:#F6DED9; --info:#2B6CB0; --info-soft:#DCE8F5;
+    --shadow:0 1px 2px rgba(20,32,28,.05),0 8px 24px rgba(20,32,28,.06);
+    --shadow-lg:0 12px 40px rgba(20,32,28,.14);
+  }
+  :root[data-theme="dark"]{
+    --ground:#0D1513; --surface:#141F1C; --surface-2:#1A2723; --surface-3:#20302B;
+    --ink:#E9F0ED; --ink-2:#A6B7B1; --ink-3:#7C8E88;
+    --line:#293833; --line-2:#33453F;
+    --accent:#54B7A8; --accent-ink:#9BDDD2; --accent-soft:#17302B; --accent-2:#D6B461;
+    --good:#5BB98A; --good-soft:#162A20; --warn:#D69A46; --warn-soft:#2E2517;
+    --crit:#E0715F; --crit-soft:#301B17; --info:#6AA6E0; --info-soft:#152536;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    --shadow-lg:0 14px 44px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--ground);color:var(--ink);font-family:var(--font);
+    line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{margin:0;text-wrap:balance;letter-spacing:-.02em;line-height:1.25;}
+  p{margin:0;}
+  a{color:inherit;}
+  .num{font-variant-numeric:tabular-nums;}
+  .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--accent);
+    text-transform:uppercase;}
+  ::selection{background:var(--accent-soft);}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:4px;}
+
+  /* ===== 인증 게이트 ===== */
+  .gate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+    padding:24px;background:
+      radial-gradient(1100px 620px at 78% -8%, var(--accent-soft), transparent 60%),
+      radial-gradient(900px 520px at 8% 108%, var(--surface-2), transparent 55%),
+      var(--ground);overflow:auto;}
+  .gate[hidden]{display:none;}
+  .gate-card{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--line);
+    border-radius:20px;box-shadow:var(--shadow-lg);padding:34px 32px 26px;}
+  .brand{display:flex;align-items:center;gap:11px;}
+  .mark{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex:none;
+    background:linear-gradient(150deg,var(--accent),var(--accent-ink));color:#fff;
+    font-weight:800;font-size:19px;box-shadow:0 4px 12px rgba(30,110,99,.35);}
+  .brand b{font-size:19px;font-weight:800;letter-spacing:-.03em;}
+  .brand small{display:block;font-size:11.5px;color:var(--ink-3);font-weight:600;letter-spacing:.01em;}
+  .gate h2{font-size:22px;margin:24px 0 5px;}
+  .gate .lead{font-size:14px;color:var(--ink-2);margin-bottom:20px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:6px;}
+  .row{display:flex;gap:10px;}
+  select,input[type=text]{width:100%;font-family:inherit;font-size:15px;color:var(--ink);
+    background:var(--surface-2);border:1.5px solid var(--line-2);border-radius:11px;
+    padding:12px 13px;transition:border-color .15s,background .15s;}
+  select:focus,input[type=text]:focus{border-color:var(--accent);background:var(--surface);outline:none;}
+  .btn{font-family:inherit;font-weight:700;border-radius:11px;cursor:pointer;border:1.5px solid transparent;
+    transition:transform .08s,box-shadow .15s,background .15s;}
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{width:100%;font-size:15.5px;padding:13px;margin-top:6px;color:#fff;
+    background:linear-gradient(150deg,var(--accent),var(--accent-ink));
+    box-shadow:0 6px 16px rgba(30,110,99,.28);}
+  .btn-primary:hover{box-shadow:0 8px 22px rgba(30,110,99,.4);}
+  .btn-ghost{width:100%;font-size:14px;padding:11px;margin-top:9px;color:var(--ink-2);
+    background:transparent;border-color:var(--line-2);}
+  .btn-ghost:hover{background:var(--surface-2);color:var(--ink);}
+  .verify-note{display:flex;gap:8px;align-items:flex-start;margin-top:16px;padding:11px 13px;
+    background:var(--accent-soft);border-radius:10px;font-size:12.5px;color:var(--accent-ink);line-height:1.5;}
+  .verify-note svg{flex:none;margin-top:1px;}
+  .demo-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;
+    padding:3px 9px;border-radius:999px;background:var(--warn-soft);color:var(--warn);
+    border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);letter-spacing:.02em;}
+  .gate-foot{margin-top:18px;padding-top:15px;border-top:1px solid var(--line);
+    font-size:11.5px;color:var(--ink-3);line-height:1.6;}
+  .err{font-size:12.5px;color:var(--crit);font-weight:600;margin-top:8px;min-height:16px;}
+
+  /* ===== 앱 셸 ===== */
+  .app[hidden]{display:none;}
+  .topbar{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--surface) 88%,transparent);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+  .topbar-in{max-width:var(--maxw);margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:14px;}
+  .topbar .brand b{font-size:16.5px;}
+  .topbar .brand small{font-size:10.5px;}
+  .top-spacer{margin-left:auto;}
+  .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--good);
+    padding:5px 11px;border-radius:999px;background:var(--good-soft);}
+  .live .dot{width:7px;height:7px;border-radius:50%;background:var(--good);
+    box-shadow:0 0 0 0 color-mix(in srgb,var(--good) 60%,transparent);animation:pulse 2.4s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--good) 55%,transparent);}
+    70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+  .whoami{display:flex;align-items:center;gap:9px;}
+  .avatar{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;
+    background:var(--accent-soft);color:var(--accent-ink);font-weight:800;font-size:13px;}
+  .whoami .who{font-size:13px;font-weight:700;line-height:1.25;}
+  .whoami .who span{display:block;font-size:11px;color:var(--ink-3);font-weight:600;}
+  .badge-rep{font-size:10px;font-weight:800;color:#fff;background:var(--accent-2);
+    padding:2px 7px;border-radius:6px;letter-spacing:.02em;vertical-align:middle;margin-left:4px;}
+  .logout{font-size:12.5px;color:var(--ink-3);background:none;border:0;cursor:pointer;font-family:inherit;
+    font-weight:600;padding:6px;}
+  .logout:hover{color:var(--ink);}
+
+  main{max-width:var(--maxw);margin:0 auto;padding:22px 22px 40px;}
+  .demo-banner{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);
+    background:var(--surface);border:1px dashed var(--line-2);border-radius:11px;padding:10px 14px;margin-bottom:18px;}
+  .hello{margin-bottom:18px;}
+  .hello h2{font-size:20px;font-weight:800;}
+  .hello p{font-size:12.5px;color:var(--ink-2);margin-top:4px;}
+  .hello b{color:var(--accent-ink);}
+
+  /* 요약 스트립 */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden;}
+  .stat .k{font-size:12px;color:var(--ink-3);font-weight:700;display:flex;align-items:center;gap:6px;}
+  .stat .v{font-size:27px;font-weight:800;letter-spacing:-.03em;margin-top:7px;line-height:1;}
+  .stat .v small{font-size:14px;font-weight:700;color:var(--ink-2);letter-spacing:0;}
+  .stat .sub{font-size:11.5px;color:var(--ink-3);margin-top:7px;line-height:1.45;}
+  .stat .strip{position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);}
+  .stat.warn .strip{background:var(--warn);}.stat.crit .strip{background:var(--crit);}
+  .stat.info .strip{background:var(--info);}
+
+  /* 레이아웃 그리드 */
+  .grid{display:grid;grid-template-columns:1.62fr 1fr;gap:20px;align-items:start;}
+  .col{display:flex;flex-direction:column;gap:20px;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);overflow:hidden;}
+  .card-h{display:flex;align-items:center;gap:10px;padding:15px 18px 13px;border-bottom:1px solid var(--line);}
+  .card-h h3{font-size:15.5px;font-weight:800;}
+  .card-h .cnt{font-size:11.5px;font-weight:700;color:var(--ink-3);margin-left:auto;
+    background:var(--surface-3);padding:3px 9px;border-radius:999px;}
+  .card-b{padding:8px 18px 16px;}
+
+  /* 소식 피드 (타임라인) */
+  .feed{list-style:none;margin:0;padding:0;}
+  .feed li{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);}
+  .feed li:last-child{border-bottom:0;}
+  .feed .when{font-size:11.5px;color:var(--ink-3);font-weight:700;text-align:right;padding-top:2px;line-height:1.4;}
+  .feed .body h4{font-size:14px;font-weight:700;margin-bottom:3px;line-height:1.4;}
+  .feed .body p{font-size:12.5px;color:var(--ink-2);line-height:1.5;}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:800;letter-spacing:.02em;
+    padding:2.5px 8px;border-radius:6px;margin-bottom:5px;}
+  .chip.gov{background:var(--info-soft);color:var(--info);}
+  .chip.fee{background:var(--warn-soft);color:var(--warn);}
+  .chip.order{background:var(--crit-soft);color:var(--crit);}
+  .chip.ok{background:var(--good-soft);color:var(--good);}
+  .src{font-size:10.5px;color:var(--ink-3);font-weight:600;margin-top:4px;display:inline-block;}
+
+  /* 투명성 이슈카드 */
+  .issues{display:grid;gap:12px;}
+  .issue{border:1px solid var(--line);border-radius:12px;padding:14px 15px;background:var(--surface-2);}
+  .issue-top{display:flex;align-items:center;gap:9px;margin-bottom:9px;}
+  .issue-top h4{font-size:14.5px;font-weight:800;}
+  .pill{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;margin-left:auto;white-space:nowrap;}
+  .pill.checking{background:var(--warn-soft);color:var(--warn);}
+  .pill.open{background:var(--crit-soft);color:var(--crit);}
+  .pill.watch{background:var(--info-soft);color:var(--info);}
+  .pill.cleared{background:var(--good-soft);color:var(--good);}
+  .issue-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line);
+    border-radius:9px;overflow:hidden;margin-top:2px;}
+  .issue-grid div{background:var(--surface);padding:9px 11px;}
+  .issue-grid .lbl{font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase;margin-bottom:3px;}
+  .issue-grid .txt{font-size:12px;color:var(--ink);line-height:1.45;}
+  .issue .next{font-size:11.5px;color:var(--accent-ink);font-weight:700;margin-top:10px;display:flex;align-items:center;gap:6px;}
+
+  /* 관리비 차트 (CSS 막대) */
+  .chart-note{font-size:12px;color:var(--ink-2);line-height:1.5;margin:2px 0 14px;padding:10px 12px;
+    background:var(--good-soft);border-radius:9px;}
+  .bars{display:grid;gap:16px;}
+  .barrow{display:grid;grid-template-columns:92px 1fr 50px;align-items:center;gap:12px;}
+  .barrow .name{font-size:12.5px;font-weight:700;color:var(--ink);}
+  .barrow .name small{display:block;font-size:10.5px;color:var(--ink-3);font-weight:600;}
+  .track{display:flex;flex-direction:column;gap:6px;}
+  .grp{display:grid;grid-template-columns:22px 1fr 44px;align-items:center;gap:8px;}
+  .grp .yr{font-size:10px;font-weight:800;color:var(--ink-3);}
+  .rail{height:12px;background:var(--surface-3);border-radius:6px;overflow:hidden;}
+  .rail .fill{display:block;height:100%;width:0;border-radius:6px;transition:width 1s cubic-bezier(.22,1,.36,1);}
+  .rail .fill.y25{background:var(--line-2);}
+  .rail .fill.y26{background:linear-gradient(90deg,var(--accent),var(--accent-ink));}
+  .grp .val{font-size:11.5px;font-weight:700;text-align:right;color:var(--ink-2);}
+  .grp .val.hi{color:var(--accent-ink);}
+  .barrow .delta{font-size:13px;font-weight:800;color:var(--crit);text-align:right;}
+  .chart-legend{display:flex;gap:16px;margin-top:14px;font-size:11.5px;color:var(--ink-2);font-weight:600;}
+  .chart-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px;}
+
+  /* 커뮤니티 */
+  .tabs{display:flex;gap:4px;padding:4px;background:var(--surface-3);border-radius:10px;margin:2px 0 12px;}
+  .tabs button{flex:1;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--ink-2);
+    background:none;border:0;border-radius:7px;padding:7px 4px;cursor:pointer;transition:.15s;}
+  .tabs button[aria-selected="true"]{background:var(--surface);color:var(--accent-ink);box-shadow:var(--shadow);}
+  .posts{list-style:none;margin:0;padding:0;}
+  .posts li{padding:11px 2px;border-bottom:1px solid var(--line);}
+  .posts li:last-child{border-bottom:0;}
+  .post-top{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+  .post-cat{font-size:10px;font-weight:800;padding:2px 7px;border-radius:5px;background:var(--accent-soft);color:var(--accent-ink);}
+  .post-cat.notice{background:var(--crit-soft);color:var(--crit);}
+  .post-cat.market{background:var(--warn-soft);color:var(--warn);}
+  .verified{font-size:10px;font-weight:700;color:var(--good);display:inline-flex;align-items:center;gap:3px;}
+  .post h4{font-size:13.5px;font-weight:700;margin-bottom:2px;}
+  .post .meta{font-size:11px;color:var(--ink-3);display:flex;gap:9px;}
+  .compose{display:flex;gap:8px;margin-top:12px;}
+  .compose input{flex:1;font-size:13px;padding:10px 12px;}
+  .compose .btn{padding:0 16px;font-size:13px;color:#fff;background:var(--accent);}
+
+  /* 라이브 설문 */
+  .poll .q{font-size:13.5px;font-weight:700;line-height:1.45;margin-bottom:11px;}
+  .poll .opts{display:grid;gap:8px;}
+  .poll .opt{display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative;
+    text-align:left;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink);
+    background:var(--surface-2);border:1.5px solid var(--line);border-radius:10px;padding:10px 13px;
+    cursor:pointer;overflow:hidden;transition:border-color .15s;}
+  .poll .opt:hover{border-color:var(--accent);}
+  .poll .opt .barfill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent-soft);
+    transition:width .7s cubic-bezier(.22,1,.36,1);z-index:0;}
+  .poll .opt .lbl,.poll .opt .pct{position:relative;z-index:1;}
+  .poll .opt .pct{font-weight:800;color:var(--accent-ink);opacity:0;transition:opacity .3s;white-space:nowrap;}
+  .poll.voted .opt{cursor:default;}
+  .poll.voted .opt .pct{opacity:1;}
+  .poll .opt.chosen{border-color:var(--accent);}
+  .poll .opt.chosen .lbl::after{content:" ✓";color:var(--accent);font-weight:800;}
+  .poll .pfoot{font-size:11px;color:var(--ink-3);margin-top:11px;display:flex;justify-content:space-between;gap:8px;}
+
+  /* 일정 */
+  .events{list-style:none;margin:0;padding:0;}
+  .events li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);align-items:center;}
+  .events li:last-child{border-bottom:0;}
+  .date-box{flex:none;width:48px;text-align:center;background:var(--surface-2);border:1px solid var(--line);
+    border-radius:9px;padding:6px 0;}
+  .date-box .m{font-size:10px;font-weight:800;color:var(--accent);letter-spacing:.03em;}
+  .date-box .d{font-size:18px;font-weight:800;line-height:1;}
+  .ev h4{font-size:13px;font-weight:700;}
+  .ev p{font-size:11.5px;color:var(--ink-3);margin-top:2px;}
+  .ev .tag{font-size:10px;font-weight:800;color:var(--warn);}
+
+  /* 데이터 출처 카드 */
+  .src-card{padding:16px 18px;}
+  .src-card h3{font-size:13.5px;margin-bottom:10px;}
+  .src-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;}
+  .src-list li{font-size:12px;color:var(--ink-2);display:flex;gap:8px;line-height:1.45;}
+  .src-list b{color:var(--ink);font-weight:700;}
+
+  footer{max-width:var(--maxw);margin:0 auto;padding:22px;border-top:1px solid var(--line);
+    font-size:11.5px;color:var(--ink-3);line-height:1.65;}
+  footer .disc{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px 15px;}
+
+  @media (max-width:880px){
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .grid{grid-template-columns:1fr;}
+    .issue-grid{grid-template-columns:1fr;}
+    .topbar .brand small{display:none;}
+  }
+  @media (max-width:480px){
+    main{padding:16px 14px 32px;}
+    .topbar-in{padding:10px 14px;}
+    .stats{grid-template-columns:1fr 1fr;gap:10px;}
+    .feed li{grid-template-columns:52px 1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+
+<!-- ===================== 인증 게이트 ===================== -->
+<!--
+  ===================== 인증 게이트 (비활성) =====================
+  [2026-09-01] 첫 화면 게이트를 제거하고 본문을 바로 노출한다.
+    이유: 열람 문턱이 공론화를 막고, 실인증 서버가 없는 상태의 게이트는 형식적이기만 함.
+  TODO: 인증은 앞으로 "읽기"가 아니라 "쓰기"에만 건다.
+    → 글쓰기·투표 버튼에만 부착 예정. 그때 아래 마크업/스크립트를 되살려 쓸 것.
+    실인증 후보: A) 고지서 세대확인번호 대조(GAS 명부, 무비용·최현실적)
+                B) 휴대폰 본인인증  C) 아파트아이 연동(API 개방 여부 미확인)
+
+  <div class="gate" id="gate"> … 동/호수 select + 확인번호 input + 입장 버튼 … </div>
+  (원본 마크업은 git 이력 및 이전 백업본 참조)
+-->
+
+<!-- ===================== 대시보드 앱 ===================== -->
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="topbar-in">
+      <div class="brand">
+        <div class="mark" style="width:32px;height:32px;font-size:15px;border-radius:9px;">단</div>
+        <div><b>단지온</b><small>상계주공10단지</small></div>
+      </div>
+      <span class="live"><span class="dot"></span>공개자료 기반</span>
+      <div class="top-spacer"></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="demo-banner">
+      <span class="demo-tag">DEMO</span>
+      <span>입주민이 만든 <b>비공식 페이지(MVP)</b>입니다. 단지 소식과 관리비 지표는 모두 <b>K-apt·서울시·구청 공개자료</b>에서 가져온 실제 수치이며, 각 항목에 출처를 표기했습니다.</span>
+    </div>
+
+    <div class="hello">
+      <h2 id="helloName">상계주공10단지 입주민 정보 페이지</h2>
+      <p>공개자료로 확인한 <b>단지 소식</b>과 <b>관리 투명성 현황</b>을 한곳에 모았습니다. · 기준일 <b>2026-09-29</b></p>
+    </div>
+
+    <!-- 요약 스트립 -->
+    <section class="stats" aria-label="단지 요약 지표">
+      <div class="stat"><span class="strip"></span>
+        <div class="k">🏘️ 단지 규모</div>
+        <div class="v num">2,654<small> 세대</small></div>
+        <div class="sub">27개동 · 중앙난방 · 1988년 준공</div>
+      </div>
+      <div class="stat warn"><span class="strip"></span>
+        <div class="k">💳 공용관리비 단가</div>
+        <div class="v num">1,784<small> 원/㎡</small></div>
+        <div class="sub">전년 1,653 → <b style="color:var(--warn)">+7.9%</b> · 서울평균 1,878보다 낮음</div>
+      </div>
+      <div class="stat crit"><span class="strip"></span>
+        <div class="k">🔎 확인 중인 사항</div>
+        <div class="v num">2<small> 건</small></div>
+        <div class="sub">관리비 오부과 · 연장근무수당 예산 통제</div>
+      </div>
+      <div class="stat info"><span class="strip"></span>
+        <div class="k">🗳️ 거버넌스 상태</div>
+        <div class="v" style="font-size:20px;">선거 대기</div>
+        <div class="sub">회장 공석(8/6 사임) · 동대표 다수 공석</div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <!-- 좌: 소식 + 이슈 + 차트 -->
+      <div class="col">
+        <section class="card">
+          <div class="card-h"><h3>📰 단지 소식</h3><span class="cnt">공개기록 기준 · 최근순</span></div>
+          <div class="card-b">
+            <ul class="feed">
+              <li><div class="when">2026<br>09.30</div><div class="body">
+                <span class="chip fee">관리비</span>
+                <h4>2025년 외부 회계감사 결과 — 공개 시한 9월 30일</h4>
+                <p>삼화회계법인이 수행한 2025년도 외부 회계감사 결과의 공개 시한이 <b>9월 30일</b>입니다. <b>9월 29일 기준으로는 아직 게시되지 않았습니다.</b> 서울시 통합정보마당 감사보고서 게시판에 올라와 있는 외부감사는 2019년도분과 2022년도분 2건입니다. 공개되면 이 페이지에 요약해 올리겠습니다.</p>
+                <span class="src">출처 · openapt.seoul.go.kr 감사보고서 게시판(2026-09-29 확인)</span>
+              </div></li>
+              <li><div class="when">2026<br>09.23</div><div class="body">
+                <span class="chip gov">거버넌스</span>
+                <h4>제9차 정기 입주자대표회의 개최 — 안건 11건</h4>
+                <p>8월중 집행된 관리비·사용료 심의, 동대표 행동지침서 제정(안), <b>선거관리위원회 전원 해임을 위한 입주민 전자투표(안)</b>, 기와 개수구 덮개공사 2회 유찰에 따른 수의계약 및 장기수선충당금 집행, 추석 격려금 703만원 등이 안건에 올랐습니다.</p>
+                <span class="src">출처 · openapt.seoul.go.kr 공고 입대 제26-200호</span>
+              </div></li>
+              <li><div class="when">2026<br>08.18</div><div class="body">
+                <span class="chip fee">관리비</span>
+                <h4>입주자대표회의, 관리비 문제 공식 인정 — 관리주체 변경 추진</h4>
+                <p>회장 직무대행 명의 안내문에서 <b>“지속적인 관리비 문제로 입주민께 금전적 부담과 피해가 발생”</b>했다고 밝히고 사과했습니다. 관리실 직원 교체 요청과 회계 직원 투입에도 재점검 결과 관리비 정상화가 충분하지 않다고 확인했으며, <b>관리비 오부과 방지와 정확한 부과체계 확립</b>을 목적으로 관리주체 변경을 추진한다고 안내했습니다. 이후 선거관리위원회 주관 <b>입주민 투표</b>가 예정돼 있습니다.</p>
+                <span class="src">출처 · openapt.seoul.go.kr 공고 선과 제26-172호</span>
+              </div></li>
+              <li><div class="when">2026<br>08.12</div><div class="body">
+                <span class="chip gov">거버넌스</span>
+                <h4>관리주체 계약해지 절차 안건 가결</h4>
+                <p>임시 입주자대표회의에서 <b>주택관리업자 선정을 위한 입찰공고</b> 안건이 가결됐습니다. 7월 제7차 정기회의에서 부결됐던 사안이 8월 임시회의에서 가결된 것입니다.</p>
+                <span class="src">출처 · openapt.seoul.go.kr 공고·회의록</span>
+              </div></li>
+              <li><div class="when">2026<br>8월 중순</div><div class="body">
+                <span class="chip gov">거버넌스</span>
+                <h4>관리사무소장 사임 · 관리 인력 교체</h4>
+                <p>17년 경력 소장이 8월 중순 사임하고 후임 체제로 넘어갔습니다. 이전 소장에게 요청했던 자료 중 일부가 전달되지 않아, <b>후임 소장에게 다시 청구가 필요한 상태</b>입니다.</p>
+                <span class="src">출처 · 관리소 면담(2026-08-10)</span>
+              </div></li>
+              <li><div class="when">2026<br>08.06</div><div class="body">
+                <span class="chip gov">거버넌스</span>
+                <h4>입주자대표회의 회장 사임</h4>
+                <p>선거관리위원회 분쟁·감사 선거 절차 오류 등 거버넌스 격변 속 회장직 공석. 보궐/신규 선거 일정 모니터링 필요.</p>
+                <span class="src">출처 · openapt.seoul.go.kr 회의록</span>
+              </div></li>
+              <li><div class="when">2025<br>12.01</div><div class="body">
+                <span class="chip order">행정지도</span>
+                <h4>노원구청 시정명령·행정지도 2건</h4>
+                <p>선거관리위원(장) 해촉 절차 위반(관리규약 제49조·제42조) 관련. 관리비 항목이 아닌 절차 위반 건이나, 규약 준수 이력의 방증.</p>
+                <span class="src">출처 · 노원구청 공문(확인완료)</span>
+              </div></li>
+              <li><div class="when">2025<br>11.26</div><div class="body">
+                <span class="chip fee">관리비</span>
+                <h4>제11차 정기회의 — 2026년도 예산안 승인(가결)</h4>
+                <p>3년 급여동결 뒤 ‘기본급 현실화 인상’, 서무주임·영선실 보직상향, <b>장기근속수당 신규지급</b> 의결. 인건비 상승의 배경. 쟁점은 산정근거·적정성.</p>
+                <span class="src">출처 · 입대의 회의록 안건3</span>
+              </div></li>
+              <li><div class="when">2026<br>봄</div><div class="body">
+                <span class="chip ok">공개 개선</span>
+                <h4>관리비 3·4월분 ‘지연공개’ → 5월분 ‘공개’로 전환</h4>
+                <p>공개의무 위반 신고 이후 K-apt 공시 상태가 정상화. 입주민 감시가 실제 공개 개선으로 이어진 사례.</p>
+                <span class="src">출처 · K-apt 공시이력</span>
+              </div></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-h"><h3>🔍 관리 투명성 대시보드</h3><span class="cnt">불편 → 원인 → 개선</span></div>
+          <div class="card-b">
+            <div class="issues">
+              <div class="issue">
+                <div class="issue-top"><h4>관리비 부과 정확성</h4><span class="pill checking">입대의 공식 인정 · 관리주체 변경 진행</span></div>
+                <div class="issue-grid">
+                  <div><div class="lbl">불편</div><div class="txt">부과액 정정이 2026년 여러 차례 발생</div></div>
+                  <div><div class="lbl">확인된 사실(공개자료)</div><div class="txt">입주자대표회의가 2026-08-18 안내문에서 관리비 문제로 입주민에게 부담과 피해가 발생했음을 <b>공식 인정</b>. 회계 직원 투입 후 재점검에서도 정상화가 충분하지 않다고 확인</div></div>
+                  <div><div class="lbl">진행 상황</div><div class="txt">관리비 오부과 방지를 목적으로 <b>관리주체 변경 절차 진행 중</b>(2026-08-12 안건 가결). 선거관리위원회 주관 입주민 투표 예정</div></div>
+                </div>
+                <div class="next">→ 남은 확인: 월별·항목별 부과내역서 열람(법 제27조)</div>
+              </div>
+
+              <div class="issue">
+                <div class="issue-top"><h4>연장근무수당 예산 통제</h4><span class="pill watch">확인 중</span></div>
+                <div class="issue-grid">
+                  <div><div class="lbl">확인이 필요한 점</div><div class="txt">예산안에 없는 지급이 있었는지 — 공시된 인건비와 예산안 사이에 <b>월 6~7백만원</b> 차이가 보입니다</div></div>
+                  <div><div class="lbl">배경(공개자료)</div><div class="txt">입주자대표회의가 2026년 6월 <b>“사전승인 없는 연장근무는 대가 지급 불가”</b> 통제를 신설. 그 이전 기간의 결재 근거가 확인되지 않았습니다</div></div>
+                  <div><div class="lbl">요청 사항</div><div class="txt">급여대장(마스킹)·연장근무 사전승인 및 결재서류 열람</div></div>
+                </div>
+                <div class="next">→ 차액의 성격을 확인하는 단계이며, 부당지급을 단정하는 것이 아닙니다</div>
+              </div>
+
+              <div class="issue">
+                <div class="issue-top"><h4>장기수선충당금 집행</h4><span class="pill cleared">회계 우수</span></div>
+                <div class="issue-grid">
+                  <div><div class="lbl">확인이 필요한 점</div><div class="txt">약 <b>36억원</b>이 적립돼 있으나 2026년 예정 사업(보도블럭 외 5개) 집행이 정체</div></div>
+                  <div><div class="lbl">원인(공개자료)</div><div class="txt">거버넌스 마비로 사업 집행 지연. 단, 구청 5년치 전수조사 90점+</div></div>
+                  <div><div class="lbl">개선 요구</div><div class="txt">장기수선계획서 예정공사 목록·집행 일정 공개</div></div>
+                </div>
+                <div class="next">→ 회계는 클리어. 쟁점은 ‘적립금 대비 사업 실행률’</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-h"><h3>📊 관리비 항목별 추이 · 2025 → 2026</h3></div>
+          <div class="card-b">
+            <p class="chart-note"><b>맥락 먼저:</b> 우리 단지 공용관리비 단가(1,784원)는 서울 평균(1,878원)보다 <b>낮습니다.</b> ‘절대적으로 비싸다’가 아닙니다. 아래 인건비 항목의 <b>상승 사유는 예산안·회계원장으로 모두 확인되었고</b>(예산 의결·고용승계 정산), 현재 확인 중인 것은 <b>예산에 없던 지급이 있었는지</b>입니다.</p>
+            <div class="bars" id="bars">
+              <!-- JS가 막대 width 채움 · 연도별 2줄 -->
+              <div class="barrow" data-v25="395" data-v26="484">
+                <div class="name">일반관리비<small>원/㎡</small></div>
+                <div class="track">
+                  <div class="grp"><span class="yr">’25</span><div class="rail"><span class="fill y25"></span></div><span class="val num">395</span></div>
+                  <div class="grp"><span class="yr">’26</span><div class="rail"><span class="fill y26"></span></div><span class="val num hi">484</span></div>
+                </div>
+                <div class="delta">+22.5%</div>
+              </div>
+              <div class="barrow" data-v25="296" data-v26="340">
+                <div class="name">└ 급여<small>원/㎡</small></div>
+                <div class="track">
+                  <div class="grp"><span class="yr">’25</span><div class="rail"><span class="fill y25"></span></div><span class="val num">296</span></div>
+                  <div class="grp"><span class="yr">’26</span><div class="rail"><span class="fill y26"></span></div><span class="val num hi">340</span></div>
+                </div>
+                <div class="delta">+14.9%</div>
+              </div>
+              <div class="barrow" data-v25="32" data-v26="54">
+                <div class="name">└ 제수당<small>원/㎡</small></div>
+                <div class="track">
+                  <div class="grp"><span class="yr">’25</span><div class="rail"><span class="fill y25"></span></div><span class="val num">32</span></div>
+                  <div class="grp"><span class="yr">’26</span><div class="rail"><span class="fill y26"></span></div><span class="val num hi">54</span></div>
+                </div>
+                <div class="delta">+68.8%</div>
+              </div>
+              <div class="barrow" data-v25="11" data-v26="38">
+                <div class="name">└ 퇴직금<small>원/㎡</small></div>
+                <div class="track">
+                  <div class="grp"><span class="yr">’25</span><div class="rail"><span class="fill y25"></span></div><span class="val num">11</span></div>
+                  <div class="grp"><span class="yr">’26</span><div class="rail"><span class="fill y26"></span></div><span class="val num hi">38</span></div>
+                </div>
+                <div class="delta">×3.5</div>
+              </div>
+            </div>
+            <div class="chart-legend">
+              <span><i style="background:var(--line-2)"></i>2025년</span>
+              <span><i style="background:var(--accent)"></i>2026년</span>
+              <span style="margin-left:auto;color:var(--ink-3)">K-apt 공시 기준 · 주거전용면적 단가</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 우: 커뮤니티 + 일정 + 출처 -->
+      <aside class="col">
+        <section class="card">
+          <div class="card-h"><h3>🗳️ 의견 청취함</h3><span class="cnt" style="background:#b45309;color:#fff;padding:2px 8px;border-radius:999px">샘플</span></div>
+          <div class="card-b">
+            <p style="margin:0 0 12px;padding:10px 12px;border-radius:10px;background:rgba(180,83,9,.12);border:1px solid rgba(180,83,9,.35);font-size:13px;line-height:1.7;color:var(--ink-2)">
+              <b>아직 운영 전인 샘플 화면입니다.</b> 지금은 의견을 받지 않으며, 아래 버튼도 동작하지 않습니다.
+              어떤 모습이 될지 미리 보여드리는 용도입니다.
+            </p>
+            <p style="margin:0 0 12px;font-size:14px;line-height:1.75;color:var(--ink-2)">
+              실제로 열리면, 장기수선충당금 약 <b>36억원</b>의 집행 우선순위 같은 사안에 대해
+              <b>구글폼</b>으로 의견을 받고 집계 결과를 이 자리에 공개할 예정입니다.
+            </p>
+            <!-- TODO: 구글폼 개설 후 아래 href 에 URL 삽입하고 '샘플' 배지·안내문 제거 -->
+            <a class="btn btn-primary" href="#" style="display:block;text-align:center;text-decoration:none;opacity:.55;cursor:not-allowed"
+               onclick="alert('샘플 화면입니다. 아직 의견을 받지 않습니다.');return false;">의견 남기기 (준비 중)</a>
+            <p style="margin:12px 0 0;font-size:12.5px;line-height:1.7;color:var(--ink-3)">
+              · 이 페이지는 <b>글을 저장하지 않습니다.</b> 개인정보를 수집하지 않습니다.<br>
+              · 의견은 외부 구글폼으로만 받고, 결과는 집계 요약만 공개합니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-h"><h3>💬 주민 논의사항</h3><span class="cnt" style="background:#b45309;color:#fff;padding:2px 8px;border-radius:999px">샘플</span></div>
+          <div class="card-b">
+            <p style="margin:0 0 12px;padding:10px 12px;border-radius:10px;background:rgba(180,83,9,.12);border:1px solid rgba(180,83,9,.35);font-size:13px;line-height:1.7;color:var(--ink-2)">
+              <b>아래는 예시로 만든 내용입니다.</b> 실제 주민이 올린 글이 아닙니다.
+              의견 청취함이 열리면 모인 의견을 주제별로 이렇게 정리해 보여드릴 예정입니다.
+            </p>
+            <ul class="feed" style="margin:0">
+              <li><div class="when">예시</div><div class="body">
+                <span class="chip fee">관리비</span>
+                <h4>관리주체 변경 투표, 무엇을 보고 판단해야 하나</h4>
+                <p>입주자대표회의가 관리비 문제를 인정하고 관리주체 변경을 추진 중입니다. 투표 전에 후보 업체의 관리 실적과 인력 구성을 비교해 볼 수 있으면 좋겠다는 의견.</p>
+              </div></li>
+              <li><div class="when">예시</div><div class="body">
+                <span class="chip gov">거버넌스</span>
+                <h4>장기수선충당금 집행 우선순위</h4>
+                <p>적립금은 쌓여 있는데 예정 사업 진행이 더디다는 지적. 노후 배관과 보도블럭 중 무엇을 먼저 할지 의견이 갈리는 상황.</p>
+              </div></li>
+              <li><div class="when">예시</div><div class="body">
+                <span class="chip ok">제안</span>
+                <h4>월별 관리비 내역을 더 쉽게 볼 수 있으면</h4>
+                <p>고지서만으로는 항목별 변동을 알기 어렵다는 의견. 공개된 자료를 그래프로 보여 달라는 요청.</p>
+              </div></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-h"><h3>🗓️ 다가오는 일정</h3></div>
+          <div class="card-b">
+            <ul class="events">
+              <li><div class="date-box"><div class="m">09월</div><div class="d">30</div></div>
+                <div class="ev"><h4>2025년 외부 회계감사 결과 <span class="tag">공개 시한</span></h4><p>09-29 기준 미게시 · 감사보고서 게시판 확인 필요</p></div></li>
+              <li><div class="date-box"><div class="m">예정</div><div class="d">투표</div></div>
+                <div class="ev"><h4>관리주체 변경 관련 입주민 투표</h4><p>선거관리위원회 주관 · 일정 공고 시 안내</p></div></li>
+              <li><div class="date-box"><div class="m">공고</div><div class="d">?</div></div>
+                <div class="ev"><h4>동대표·회장·감사 선거 <span class="tag">모니터링</span></h4><p>공석 다수 · 회장 직무대행 체제 · 공고 게시 시 알림</p></div></li>
+              <li><div class="date-box"><div class="m">월례</div><div class="d">末</div></div>
+                <div class="ev"><h4>입주자대표회의 정기회의</h4><p>회의록 openapt.seoul.go.kr 공개</p></div></li>
+              <li><div class="date-box"><div class="m">상시</div><div class="d">27</div></div>
+                <div class="ev"><h4>관리비 열람·복사 청구</h4><p>법 제27조 · 접수 후 10일 내 회신</p></div></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="card src-card">
+          <h3>🔗 데이터 출처 · 투명하게</h3>
+          <ul class="src-list">
+            <li>📈 <span><b>K-apt</b> 공동주택관리정보시스템 — 관리비 공시(단지코드 A13920804)</span></li>
+            <li>📄 <span><b>openapt.seoul.go.kr</b> 서울시 통합정보마당 — 입대의 회의록</span></li>
+            <li>🏛️ <span><b>노원구청</b> 주택과 — 공문·지도점검 기록</span></li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="disc">
+      <b>비공식 안내</b> · 이 페이지는 상계주공10단지 입주민이 만든 <b>비공식 페이지(MVP)</b>이며, 관리주체·입주자대표회의의 공식 서비스가 아닙니다.
+      단지 소식과 관리비 지표는 <b>K-apt·서울시 통합정보마당·노원구청 공개자료 기준</b>이며 각 항목에 출처를 표기했습니다.
+      <b>특정인의 위법행위를 주장하거나 단정하지 않습니다.</b> 확인이 끝난 사항은 ‘확인됨’으로 정정해 표시하며,
+      현재 표기된 것은 <b>절차와 근거를 확인하는 중</b>이라는 뜻입니다. 이 페이지는 <b>어떤 개인정보도 수집·저장·전송하지 않습니다.</b>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  /* ===================== 인증 게이트 스크립트 (비활성) =====================
+     [2026-09-01] 읽기 게이트를 제거했다. 아래 로직은 향후 "글쓰기·투표"에만 다시 붙일 때 참고용.
+       - 동 목록(1001~1027) select 채우기
+       - gateForm submit → enter(true) / peek → enter(false)
+       - logout → 게이트 복귀
+     실인증 후보: A) 고지서 세대확인번호 대조(GAS 명부)  B) 휴대폰 본인인증  C) 아파트아이 연동
+     ======================================================================== */
+
+  // ---- 관리비 막대: 전 항목 공통 최대값 기준으로 폭 산정 ----
+  function animateBars(){
+    var rows=[].slice.call(document.querySelectorAll('#bars .barrow'));
+    if(!rows.length) return;
+    var max=0;
+    rows.forEach(function(r){ max=Math.max(max, +r.dataset.v25, +r.dataset.v26); });
+    rows.forEach(function(r){
+      var f25=r.querySelector('.fill.y25'), f26=r.querySelector('.fill.y26');
+      f25.style.width='0%'; f26.style.width='0%';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        f25.style.width=((+r.dataset.v25)/max*100)+'%';
+        f26.style.width=((+r.dataset.v26)/max*100)+'%';
+      });});
+    });
+  }
+
+  /* ---- 관리비 수치 외부 데이터(data.json) 연동 ----
+     화면의 값은 data.json 이 없거나 못 읽어도 그대로 보이도록 HTML에 남겨두었다(폴백).
+     data.json 을 읽는 데 성공하면 그 값으로 덮어쓴다.
+     TODO: 공공데이터포털 K-apt 관리비 오픈API 연동 → data.json 을 자동 생성
+           (국토교통부_공동주택관리비 정보제공서비스 / 단지코드 A13920804)
+     TODO: 단지코드를 ?apt=A13920804 파라미터로 받아 다른 단지에도 재사용
+     ※ 로컬 파일(file://)로 열면 브라우저 보안정책상 fetch 가 막힐 수 있다. 그때는 폴백값이 그대로 쓰인다. */
+  var APT = new URLSearchParams(location.search).get('apt') || 'A13920804';
+  function applyData(d){
+    try{
+      var c = d && d.complexes && d.complexes[APT];
+      if(!c) return;
+      var rows=[].slice.call(document.querySelectorAll('#bars .barrow'));
+      (c.items||[]).forEach(function(it, idx){
+        var r=rows[idx]; if(!r) return;
+        r.dataset.v25=it.y2025; r.dataset.v26=it.y2026;
+        var v=r.querySelectorAll('.val');
+        if(v[0]) v[0].textContent=it.y2025;
+        if(v[1]) v[1].textContent=it.y2026;
+        var dl=r.querySelector('.delta'); if(dl&&it.delta) dl.textContent=it.delta;
+      });
+      animateBars();
+    }catch(e){}
+  }
+  fetch('data.json').then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d) applyData(d); })
+    .catch(function(){ /* 폴백값 사용 */ });
+
+  animateBars();
+})();
+</script>
