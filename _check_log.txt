@@ -1,0 +1,18 @@
+﻿[2026-10-02 10:17] ??湲 諛쒓껄
+    [2026-10-02 10:17] 게시물 16건 확인
+    
+    새 글 7건:
+      - [aptLeaderMeeting] 입주민 여러분께 알립니다.
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3054655)
+      - [electionCmt] 제27기 (보궐) 회장 개표결과 공고
+        상세: 단지홈에서 goActDetail('electionCmt', 3054636)
+      - [electionCmt] 제27기 (보궐) 회장 당선인 공고
+        상세: 단지홈에서 goActDetail('electionCmt', 3054634)
+      - [noticeMng] 입주민 여러분께 알립니다.
+        상세: 단지홈에서 goActDetail('noticeMng', 3054654)
+      - [noticeMng] 제27기 (보궐) 회장 개표결과 공고
+        상세: 단지홈에서 goActDetail('noticeMng', 3054640)
+      - [noticeMng] 제27기 (보궐) 회장 당선인 공고
+        상세: 단지홈에서 goActDetail('noticeMng', 3054623)
+      - [noticeMng] 기와지붕 개수구(구명) 덮개 설치공사
+        상세: 단지홈에서 goActDetail('noticeMng', 3054621)
