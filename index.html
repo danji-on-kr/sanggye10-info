@@ -452,7 +452,65 @@
   .issue-grid .txt b{white-space:normal;}
   @media (max-width:480px){.vb-dl>div{flex-direction:column;gap:2px;}.vb-dl dd{text-align:left;}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+/* D. HERITAGE PAPER — 종이 바탕·진초록 잉크·브라스 포인트 1개. 장식(테두리 이중선·글로우) 없음 */
+html:root,html:root[data-theme]{color-scheme:light;
+ --ground:#F5F2E9;--surface:#FBF9F3;--surface-2:#F0ECDF;--surface-3:#E7E2D1;
+ --ink:#14221D;--ink-2:#34443D;--ink-3:#586861;--line:#DDD7C4;--line-2:#B9B198;
+ --accent:#1F5C4D;--accent-ink:#17463A;--accent-soft:#E1ECE6;--accent-2:#A3792E;
+ --good:#1F6E46;--good-soft:#DFEDE3;--warn:#8A5412;--warn-soft:#F4E7CF;--crit:#A32D20;--crit-soft:#F4DDD7;--info:#245E9B;--info-soft:#DDE8F4;
+ --serif:"Noto Serif KR",serif;--font:"Pretendard Variable","Noto Sans KR",system-ui,sans-serif;--shadow:none;--shadow-lg:none;}
+body{font-size:16.5px;line-height:1.8;}
+.topbar{background:var(--ground);border-bottom:1px solid var(--line-2);backdrop-filter:none;}
+.topbar .brand b{font-family:var(--serif);font-weight:600;}
+.masthead{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center;padding:44px 40px;border-radius:4px;background:#173B31;color:#F5F2E9;border:0;box-shadow:none;margin:22px 0;}
+.masthead::before{display:none;}
+.masthead h2{font-family:var(--serif);font-weight:600;color:#fff;font-size:clamp(28px,4.2vw,42px);line-height:1.35;letter-spacing:-.025em;max-width:none;}
+.masthead h2 .gold{color:#E3C88A;}
+.masthead p{color:#E4E9E3;font-size:15.5px;line-height:1.85;margin-top:16px;max-width:40ch;}.masthead p b{color:#fff;}
+.votebox{background:#F5F2E9;color:var(--ink);border:0;border-radius:3px;padding:22px 24px;}
+.vb-h{align-items:baseline;}.vb-t{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:0;}
+.vb-d{font-family:var(--serif);font-size:44px;font-weight:700;color:var(--accent);letter-spacing:-.02em;font-variant-numeric:lining-nums;}
+.vb-track{height:6px;background:var(--line);border-radius:3px;margin:14px 0;}.vb-track i{background:var(--accent);border-radius:3px;}
+.vb-dl{font-size:14.5px;}.vb-dl dt{color:var(--ink-3);}.vb-dl dd{color:var(--ink);font-weight:700;}
+.masthead .vb-n{color:var(--ink-3);border-top:1px solid var(--line);font-size:13.5px;}
+.demo-banner{background:var(--surface-2);border:1px solid var(--line);border-radius:4px;color:var(--ink-2);}.demo-tag{background:var(--ink);color:var(--ground);border-radius:2px;}
+.stats{background:var(--surface);border:1px solid var(--line-2);border-radius:4px;box-shadow:none;}.stat{border-right:1px solid var(--line);}
+.stat .k{font-size:13.5px;font-weight:700;color:var(--ink-2);letter-spacing:0;}.stat .k .ic{color:var(--accent);}
+.stat .v{font-family:var(--serif);font-weight:700;font-size:36px;color:var(--ink);font-variant-numeric:lining-nums;}.stat .v small{font-family:var(--font);font-size:14px;color:var(--ink-2);font-weight:500;}
+.stat .sub{color:var(--ink-2);font-size:14px;}
+.card,.issue{background:var(--surface);border:1px solid var(--line-2);border-radius:4px;box-shadow:none;}
+.card-h{border-bottom:1px solid var(--line);}.card-h h3{font-family:var(--serif);font-weight:700;font-size:20px;}
+.card-h h3 .ic{background:var(--accent-soft);color:var(--accent);border-radius:3px;}.card-h .cnt{font-size:13px;color:var(--ink-3);}
+.filters button{border-radius:3px;background:var(--surface);border:1px solid var(--line-2);color:var(--ink);font-size:14.5px;min-height:44px;font-weight:600;}
+.filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;}
+.timeline::before{background:var(--line-2);width:1px;}.timeline li::after{background:var(--accent);border-radius:50%;box-shadow:0 0 0 4px var(--surface);}
+.timeline li{border-top:1px solid var(--line);}
+.timeline .when{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--accent-ink);font-variant-numeric:lining-nums;}.timeline .when span{font-family:var(--font);font-size:12px;color:var(--ink-3);letter-spacing:.04em;}
+.timeline .body h4{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.5;color:var(--ink);}
+.timeline .body p,.card-b p{color:var(--ink-2);font-size:16px;line-height:1.85;}
+.chip{border-radius:2px;font-size:12.5px;font-weight:700;padding:3px 9px;letter-spacing:0;}
+.chip.now{background:var(--accent);color:#fff;}.chip.now::before{background:#fff;}
+.src{color:var(--ink-3);font-size:13.5px;}
+.btn{border-radius:3px;}.btn-primary,.btn.primary{background:var(--accent);color:#fff;}
+@media(max-width:700px){.masthead{grid-template-columns:1fr;gap:24px;padding:32px 22px;}}
+
+/* ── 다크 모드 ── */
+@media (prefers-color-scheme:dark){html:root:not([data-theme="light"]){color-scheme:dark;
+ --ground:#0F1A16;--surface:#16241F;--surface-2:#1B2C26;--surface-3:#223730;--ink:#F3F0E4;--ink-2:#D3D9CF;--ink-3:#AEBBB2;--line:#2A3F37;--line-2:#42584F;
+ --accent:#6FC2A8;--accent-ink:#9AD9C5;--accent-soft:#183A31;--good:#6DC59A;--good-soft:#14301f;--warn:#E3AE5C;--warn-soft:#31281a;--crit:#EB8C7A;--crit-soft:#3a1f1b;--info:#8DB8E6;--info-soft:#15283b;}}
+html:root[data-theme="dark"]{color-scheme:dark;
+ --ground:#0F1A16;--surface:#16241F;--surface-2:#1B2C26;--surface-3:#223730;--ink:#F3F0E4;--ink-2:#D3D9CF;--ink-3:#AEBBB2;--line:#2A3F37;--line-2:#42584F;
+ --accent:#6FC2A8;--accent-ink:#9AD9C5;--accent-soft:#183A31;--good:#6DC59A;--good-soft:#14301f;--warn:#E3AE5C;--warn-soft:#31281a;--crit:#EB8C7A;--crit-soft:#3a1f1b;--info:#8DB8E6;--info-soft:#15283b;}
+.votebox{background:var(--ground);}
+.filters button[aria-pressed="true"],.btn-primary,.btn.primary{color:#fff;}
+@media (prefers-color-scheme:dark){html:root:not([data-theme="light"]) .filters button[aria-pressed="true"],html:root:not([data-theme="light"]) .btn-primary,html:root:not([data-theme="light"]) .chip.now{color:#0F1A16;}}
+html:root[data-theme="dark"] .filters button[aria-pressed="true"],html:root[data-theme="dark"] .btn-primary,html:root[data-theme="dark"] .chip.now{color:#0F1A16;}
+html:root[data-theme="dark"] .chip.now::before{background:#0F1A16;}
+
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+
 
 <!-- ===================== 인증 게이트 ===================== -->
 <!--
@@ -502,7 +560,7 @@
     <section class="masthead">
       <div>
         <h2 id="helloName"><span class="gold">상계주공10단지</span><br>입주민 정보 페이지</h2>
-        <p>공개자료로 확인한 <b>단지 소식</b>과 <b>관리 투명성 현황</b>을 한곳에 모았습니다. · 기준일 <b>2026-11-04</b></p>
+        <p>공개자료로 확인한 <b>단지 소식</b>과 <b>관리 투명성 현황</b>을 한곳에 모았습니다. · 기준일 <b>2026-11-06</b></p>
       </div>
       <div class="votebox" aria-label="관리업체 입찰 동의 2차 투표 일정">
         <div class="vb-h"><span class="vb-t">관리업체 입찰 동의 · 2차 투표</span><b class="vb-d num" id="vbD">D-3</b></div>
@@ -552,6 +610,13 @@
           <div class="card-b">
             <div class="filters" role="group" aria-label="소식 분류"><button type="button" data-f="all" aria-pressed="true">전체</button><button type="button" data-f="fee" aria-pressed="false">관리비</button><button type="button" data-f="gov" aria-pressed="false">거버넌스</button><button type="button" data-f="etc" aria-pressed="false">기타</button></div>
             <ul class="feed timeline" id="feed">
+              <li><div class="when"><span>2026</span>11.03</div><div class="body">
+                <span class="chip gov">거버넌스</span>
+                <h4>선관위, <b>11/7(토) 18:00 회의</b>로 동의투표 개표 안건 처리 예정</h4>
+                <p>선거관리위원회가 관리규약 제52조에 따라 <b>2026년 11월 7일(토) 18:00 관리동 내 입주자대표회의실</b>에서 회의를 열고, 안건으로 <b>“주택관리업자 선정 관련 입찰공고(안) 주요사항 동의투표 개표의 건”</b>을 올렸습니다. 현장투표가 18:00에 끝나므로, 같은 시각에 개표 회의가 시작되는 일정입니다.</p>
+                <p style="font-size:13px;color:var(--ink-3)">※ 같은 날 올라온 “11월 07일 현장투개표소 공고”의 첨부 PDF는 제목과 달리 10월 6일자 공고(선관 제26-223호)와 노원구청 행정지도 문서였습니다. 현장 투·개표 장소·시간은 위 10/27 공고(관리동 입주자대표회의실, 10:00~18:00)를 기준으로 안내합니다.</p>
+                <span class="src">출처 · openapt.seoul.go.kr 선관위 공고 선관 제26-257호(2026-11-03 게시)</span>
+              </div></li>
               <li><div class="when"><span>2026</span>10.27</div><div class="body">
                 <span class="chip now" id="nowChip">투표 진행 중</span><span class="chip fee">관리비</span>
                 <h4>관리업체 선정 입찰 조건 — 입주민 동의 <b>2차 투표(10/31~11/7)</b></h4>

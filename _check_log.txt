@@ -22,3 +22,116 @@
 [2026-10-11 10:17] ??湲 ?놁쓬
 [2026-10-12 10:17] ??湲 ?놁쓬
 [2026-10-13 10:17] ??湲 ?놁쓬
+[2026-10-14 10:17] ??湲 ?놁쓬
+[2026-10-15 10:17] ??湲 諛쒓껄
+    [2026-10-15 10:17] 게시물 16건 확인
+    
+    새 글 11건:
+      - [aptLeaderMeeting] 주택관리업자 선정관련 전자투표 진행에 대한 입주자대표회의 입장 및 안내
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3060898)
+      - [aptLeaderMeeting] 제10-1차 임시입주자대표회의 회의결과
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3060896)
+      - [aptLeaderMeeting] 26년10월 6일(공고문(계약해지 선관위 직무정지상태)
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3060891)
+      - [aptLeaderMeeting] 총무이사 사임 공고(조세라)
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3060887)
+      - [electionCmt] 현장 투.개표소 공고
+        상세: 단지홈에서 goActDetail('electionCmt', 3060910)
+      - [electionCmt] 26년 10월 13일 위탁관리업체 선정 입찰 입주자댗 과반수 동의 구청자문
+        상세: 단지홈에서 goActDetail('electionCmt', 3060901)
+      - [electionCmt] 26년 10월6일 (위수탁업체 업체선정 입찰공고)
+        상세: 단지홈에서 goActDetail('electionCmt', 3060890)
+      - [noticeMng] 현장 투.개표소 공고
+        상세: 단지홈에서 goActDetail('noticeMng', 3060909)
+      - [noticeMng] 소방시설공사 계약서
+        상세: 단지홈에서 goActDetail('noticeMng', 3060908)
+      - [noticeMng] 기와지붕개수구(구멍)덮개 설치공사
+        상세: 단지홈에서 goActDetail('noticeMng', 3060907)
+      - [noticeMng] 납품계약서(난방설비 보호제)
+        상세: 단지홈에서 goActDetail('noticeMng', 3060906)
+[2026-10-16 10:17] ??湲 ?놁쓬
+[2026-10-17 10:17] ??湲 ?놁쓬
+[2026-10-18 10:17] ??湲 ?놁쓬
+[2026-10-19 10:17] ??湲 ?놁쓬
+[2026-10-20 10:17] ??湲 諛쒓껄
+    [2026-10-20 10:17] 게시물 16건 확인
+    
+    새 글 3건:
+      - [aptLeaderMeeting] 26년 10월 16일 (긴급)주택관리업자선정동의결과(선관제26-236호)에 대한 입대의 공식입장
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3063337)
+      - [electionCmt] 26년 10월 13일 (보궐) 선거관리위원회 위원모집공고
+        상세: 단지홈에서 goActDetail('electionCmt', 3063358)
+      - [noticeMng] 26년 10월 16일 (긴급)주택관리업자선정동의결과(선관제26-236호)에 대한 입대의 공식입장
+        상세: 단지홈에서 goActDetail('noticeMng', 3063338)
+[2026-10-21 10:17] ??湲 ?놁쓬
+[2026-10-22 10:17] ??湲 ?놁쓬
+[2026-10-23 10:17] ??湲 諛쒓껄
+    [2026-10-23 10:17] 게시물 16건 확인
+    
+    새 글 2건:
+      - [aptLeaderMeeting] 26년 10월 13일(보궐)선거관리위원회 위원 모집공고
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3066709)
+      - [noticeMng] 26년 10월 13일(보궐)선거관리위원회 위원 모집공고
+        상세: 단지홈에서 goActDetail('noticeMng', 3066708)
+[2026-10-24 10:17] ??湲 諛쒓껄
+    [2026-10-24 10:17] 게시물 16건 확인
+    
+    새 글 4건:
+      - [electionCmt] 26년 10월 26일(보궐)선거관리위원 구성공고
+        상세: 단지홈에서 goActDetail('electionCmt', 3068383)
+      - [electionCmt] 26년 10월 26일(긴급)선거관리위원회 회의 개최
+        상세: 단지홈에서 goActDetail('electionCmt', 3068375)
+      - [noticeMng] 26년 10월 26일(보궐)선거관리위원 구성공고
+        상세: 단지홈에서 goActDetail('noticeMng', 3068379)
+      - [noticeMng] 26년 10월 26일(긴급)선거관리위원회 회의 개최
+        상세: 단지홈에서 goActDetail('noticeMng', 3068378)
+[2026-10-25 10:17] ??湲 ?놁쓬
+[2026-10-26 10:17] ??湲 ?놁쓬
+[2026-10-27 10:17] ??湲 諛쒓껄
+    [2026-10-27 10:17] 게시물 16건 확인
+    
+    새 글 4건:
+      - [aptLeaderMeeting] 제10차 정기입주자대표회의 회의록
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3070063)
+      - [aptLeaderMeeting] 제10차 정기입주자대표회의 회의개최
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3070061)
+      - [noticeMng] 제10차 정기입주자대표회의 회의록
+        상세: 단지홈에서 goActDetail('noticeMng', 3070079)
+      - [noticeMng] 제10차 정기입주자대표회의 회의개최공고
+        상세: 단지홈에서 goActDetail('noticeMng', 3070078)
+[2026-10-28 10:17] ??湲 諛쒓껄
+    [2026-10-28 10:17] 게시물 16건 확인
+    
+    새 글 8건:
+      - [aptLeaderMeeting] 선거관리위원회 가처분 관련 법률자문료의 운영비 집행 가능 여부 질의 회신
+        상세: 단지홈에서 goActDetail('aptLeaderMeeting', 3071437)
+      - [electionCmt] 주택관리업자 선정 관련 입찰 중요사항 동의절차 안내
+        상세: 단지홈에서 goActDetail('electionCmt', 3071523)
+      - [electionCmt] 26년10월26일 선거관리위원회의결과 공고
+        상세: 단지홈에서 goActDetail('electionCmt', 3071518)
+      - [electionCmt] 선거관리위원회 가처분 관련 법률자문료의 운영비 집행 가능 여부 질의 회신
+        상세: 단지홈에서 goActDetail('electionCmt', 3071436)
+      - [noticeMng] 주택관리업자 선정 관련 입찰 중요사항 동의절차 안내
+        상세: 단지홈에서 goActDetail('noticeMng', 3071520)
+      - [noticeMng] 26년10월26일 선거관리위원회의결과 공고
+        상세: 단지홈에서 goActDetail('noticeMng', 3071519)
+      - [noticeMng] 승강기비상통화장치 교체 및 선로 책임보수공사 업체선정
+        상세: 단지홈에서 goActDetail('noticeMng', 3071460)
+      - [noticeMng] 공용소화기 교체구매 및 설치업체 선정 입차공고
+        상세: 단지홈에서 goActDetail('noticeMng', 3071459)
+[2026-10-29 10:17] ??湲 ?놁쓬
+[2026-10-30 10:17] ??湲 ?놁쓬
+[2026-10-31 10:17] ??湲 ?놁쓬
+[2026-11-01 10:17] ??湲 ?놁쓬
+[2026-11-02 10:17] ??湲 ?놁쓬
+[2026-11-03 10:17] ??湲 ?놁쓬
+[2026-11-04 10:17] ??湲 諛쒓껄
+    [2026-11-04 10:17] 게시물 16건 확인
+    
+    새 글 2건:
+      - [electionCmt] 26년 11월 07일 현장투개표소 공고
+        상세: 단지홈에서 goActDetail('electionCmt', 3076313)
+      - [electionCmt] 26년 11월 07일 선거관리위원회 회의 개최
+        상세: 단지홈에서 goActDetail('electionCmt', 3076312)
+[2026-11-05 10:17] ??湲 ?놁쓬
+[2026-11-06 10:17] ??湲 ?놁쓬
