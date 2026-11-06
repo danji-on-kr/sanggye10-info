@@ -508,6 +508,27 @@ html:root[data-theme="dark"]{color-scheme:dark;
 html:root[data-theme="dark"] .filters button[aria-pressed="true"],html:root[data-theme="dark"] .btn-primary,html:root[data-theme="dark"] .chip.now{color:#0F1A16;}
 html:root[data-theme="dark"] .chip.now::before{background:#0F1A16;}
 
+
+/* ── 화면 분리: 메뉴별로 한 화면씩 ── */
+html[data-view] .grid{display:block;max-width:880px;margin:0 auto;}
+html[data-view] .col{display:block;}
+html[data-view] .grid .card{display:none;}
+html[data-view="home"] :is(#events,.src-card),html[data-view="news"] #news,html[data-view="issues"] #issues,
+html[data-view="chart"] #chart,html[data-view="board"] #board,html[data-view="events"] #events{display:block;}
+html[data-view]:not([data-view="home"]) :is(.masthead,.demo-banner,.stats){display:none;}
+html[data-view]:not([data-view="home"]) main{padding-top:28px;}
+.tnav a[aria-current="page"]{background:var(--accent);color:#fff;}
+html[data-theme="dark"] .tnav a[aria-current="page"]{color:#0F1A16;}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]) .tnav a[aria-current="page"]{color:#0F1A16;}}
+@media (max-width:880px){
+  .tnav{display:grid;grid-template-columns:repeat(6,1fr);gap:0;margin:0;position:fixed;left:0;right:0;bottom:0;z-index:60;
+    background:var(--surface);border-top:1px solid var(--line-2);padding:0 0 env(safe-area-inset-bottom);}
+  .tnav a{font-size:13.5px;text-align:center;padding:15px 0;border-radius:0;min-height:48px;}
+  .tnav a[aria-current="page"]{background:none;color:var(--accent-ink);box-shadow:inset 0 3px 0 var(--accent);}
+  html[data-theme="dark"] .tnav a[aria-current="page"]{color:var(--accent-ink);}
+  @media (prefers-color-scheme:dark){html:not([data-theme="light"]) .tnav a[aria-current="page"]{color:var(--accent-ink);}}
+  main{padding-bottom:84px;}footer{padding-bottom:84px;}
+}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 
@@ -551,7 +572,7 @@ html:root[data-theme="dark"] .chip.now::before{background:#0F1A16;}
         <div><b>단지온</b><small>상계주공10단지</small></div>
       </div>
       <span class="live"><span class="dot"></span>공개자료 기반</span>
-      <nav class="tnav" aria-label="바로가기"><a href="#news">소식</a><a href="#issues">투명성</a><a href="#chart">관리비</a><a href="#board">의견</a><a href="#events">일정</a></nav>
+      <nav class="tnav" aria-label="화면 이동"><a href="#home">홈</a><a href="#news">소식</a><a href="#issues">투명성</a><a href="#chart">관리비</a><a href="#board">의견</a><a href="#events">일정</a></nav>
       <div class="top-spacer"></div>
     </div>
   </header>
@@ -1038,3 +1059,20 @@ html:root[data-theme="dark"] .chip.now::before{background:#0F1A16;}
   animateBars();
 })();
 </script>
+
+<script>
+(function(){
+  var V=['home','news','issues','chart','board','events'], links=[].slice.call(document.querySelectorAll('.tnav a'));
+  function route(){
+    var v=(location.hash||'').replace('#','');
+    if(V.indexOf(v)<0) v='home';
+    document.documentElement.setAttribute('data-view',v);
+    links.forEach(function(a){ if(a.getAttribute('href')==='#'+v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',route);
+  document.documentElement.style.scrollBehavior='auto';
+  route();
+})();
+</script>
+
